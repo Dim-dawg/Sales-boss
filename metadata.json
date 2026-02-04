@@ -1,0 +1,7 @@
+{
+  "name": "Sales Boss - Affiliate Bros",
+  "description": "A Belizean AI sales agent for Affiliate Bros, specializing in Amazon affiliate products.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
