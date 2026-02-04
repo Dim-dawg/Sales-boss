@@ -69,9 +69,11 @@ const App: React.FC = () => {
     return { result: "Product displayed to user." };
   }, []);
 
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY as string | undefined;
+
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
-    if (!process.env.API_KEY) {
+    if (!apiKey) {
         alert("API Key is missing!");
         return;
     }
@@ -86,7 +88,7 @@ const App: React.FC = () => {
     setInputText('');
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey });
       // Using gemini-3-flash-preview for text chat
       // Note: For complex chat history, we'd normally use ai.chats.create, 
       // but for simplicity in this mix mode, we'll just send the last query or reconstruct context if needed.
@@ -141,7 +143,7 @@ const App: React.FC = () => {
   // --- Live API Logic ---
 
   const startCall = async () => {
-    if (!process.env.API_KEY) return;
+    if (!apiKey) return;
     setCallStatus(CallStatus.CONNECTING);
 
     try {
@@ -170,7 +172,7 @@ const App: React.FC = () => {
       scriptProcessor.connect(inputCtx.destination);
 
       // 3. Connect to Gemini
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey });
       const sessionPromise = ai.live.connect({
         model: 'gemini-2.5-flash-native-audio-preview-12-2025',
         config: {
